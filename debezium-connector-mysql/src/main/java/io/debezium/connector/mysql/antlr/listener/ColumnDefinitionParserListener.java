@@ -223,7 +223,7 @@ public class ColumnDefinitionParserListener extends MySqlParserBaseListener {
                 charsetName = collectionDataTypeContext.charsetName().getText();
             }
 
-            if (dataType.name().toUpperCase().equals("SET")) {
+            if ("SET".equals(dataType.name().toUpperCase())) {
                 // After DBZ-132, it will always be comma separated
                 int optionsSize = collectionDataTypeContext.collectionOptions().collectionOption().size();
                 columnEditor.length(Math.max(0, optionsSize * 2 - 1)); // number of options + number of commas
@@ -235,7 +235,7 @@ public class ColumnDefinitionParserListener extends MySqlParserBaseListener {
 
         String dataTypeName = dataType.name().toUpperCase();
 
-        if (dataTypeName.equals("ENUM") || dataTypeName.equals("SET")) {
+        if ("ENUM".equals(dataTypeName) || "SET".equals(dataTypeName)) {
             // type expression has to be set, because the value converter needs to know the enum or set options
             MySqlParser.CollectionDataTypeContext collectionDataTypeContext = (MySqlParser.CollectionDataTypeContext) dataTypeContext;
 
@@ -246,7 +246,7 @@ public class ColumnDefinitionParserListener extends MySqlParserBaseListener {
             columnEditor.type(dataTypeName);
             columnEditor.enumValues(collectionOptions);
         }
-        else if (dataTypeName.equals("SERIAL")) {
+        else if ("SERIAL".equals(dataTypeName)) {
             // SERIAL is an alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
             columnEditor.type("BIGINT UNSIGNED");
             serialColumn();

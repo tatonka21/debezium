@@ -309,7 +309,7 @@ public class LogMinerDmlParser implements DmlParser {
                 else {
                     // use value as-is
                     String s = sql.substring(start, index);
-                    if (!s.equals(UNSUPPORTED_TYPE) && !s.equals(NULL)) {
+                    if (!UNSUPPORTED_TYPE.equals(s) && !NULL.equals(s)) {
                         int position = LogMinerHelper.getColumnIndexByName(columnNames[columnIndex], table);
                         values[position] = s;
                     }
@@ -430,8 +430,8 @@ public class LogMinerDmlParser implements DmlParser {
                 }
                 else if ((c == ',' || c == ' ' || c == ';') && nested == 0) {
                     String value = sql.substring(start, index);
-                    if (value.equals(NULL) || value.equals(UNSUPPORTED_TYPE)) {
-                        if (value.equals(NULL)) {
+                    if (NULL.equals(value) || UNSUPPORTED_TYPE.equals(value)) {
+                        if (NULL.equals(value)) {
                             // In order to identify when a field is not present in the set-clause or when
                             // a field is explicitly set to null, the NULL_SENTINEL value is used to then
                             // indicate that the field is explicitly being cleared to NULL.
@@ -446,7 +446,7 @@ public class LogMinerDmlParser implements DmlParser {
                         inColumnName = true;
                         continue;
                     }
-                    else if (value.equals(UNSUPPORTED)) {
+                    else if (UNSUPPORTED.equals(value)) {
                         continue;
                     }
                     int position = LogMinerHelper.getColumnIndexByName(currentColumnName, table);
@@ -582,14 +582,14 @@ public class LogMinerDmlParser implements DmlParser {
                 }
                 else if ((c == ';' || c == ' ') && nested == 0) {
                     String value = sql.substring(start, index);
-                    if (value.equals(NULL) || value.equals(UNSUPPORTED_TYPE)) {
+                    if (NULL.equals(value) || UNSUPPORTED_TYPE.equals(value)) {
                         start = index + 1;
                         inColumnValue = false;
                         inSpecial = false;
                         inColumnName = true;
                         continue;
                     }
-                    else if (value.equals(UNSUPPORTED)) {
+                    else if (UNSUPPORTED.equals(value)) {
                         continue;
                     }
                     int position = LogMinerHelper.getColumnIndexByName(currentColumnName, table);

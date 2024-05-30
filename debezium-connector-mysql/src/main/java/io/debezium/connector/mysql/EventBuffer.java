@@ -93,13 +93,13 @@ class EventBuffer {
             QueryEventData command = streamingChangeEventSource.unwrapData(event);
             LOGGER.debug("Received query command: {}", event);
             String sql = command.getSql().trim();
-            if (sql.equalsIgnoreCase("BEGIN")) {
+            if ("BEGIN".equalsIgnoreCase(sql)) {
                 beginTransaction(partition, offsetContext, event);
             }
-            else if (sql.equalsIgnoreCase("COMMIT")) {
+            else if ("COMMIT".equalsIgnoreCase(sql)) {
                 completeTransaction(partition, offsetContext, true, event);
             }
-            else if (sql.equalsIgnoreCase("ROLLBACK")) {
+            else if ("ROLLBACK".equalsIgnoreCase(sql)) {
                 rollbackTransaction();
             }
             else {

@@ -778,7 +778,7 @@ public class BinlogReader extends AbstractReader {
         QueryEventData command = unwrapData(event);
         logger.debug("Received query command: {}", event);
         String sql = command.getSql().trim();
-        if (sql.equalsIgnoreCase("BEGIN")) {
+        if ("BEGIN".equalsIgnoreCase(sql)) {
             // We are starting a new transaction ...
             source.startNextTransaction();
             source.setBinlogThread(command.getThreadId());
@@ -790,7 +790,7 @@ public class BinlogReader extends AbstractReader {
             }
             return;
         }
-        if (sql.equalsIgnoreCase("COMMIT")) {
+        if ("COMMIT".equalsIgnoreCase(sql)) {
             handleTransactionCompletion(event);
             return;
         }
@@ -805,7 +805,7 @@ public class BinlogReader extends AbstractReader {
             logger.debug("DDL '{}' was filtered out of processing", sql);
             return;
         }
-        if (upperCasedStatementBegin.equals("INSERT ") || upperCasedStatementBegin.equals("UPDATE ") || upperCasedStatementBegin.equals("DELETE ")) {
+        if ("INSERT ".equals(upperCasedStatementBegin) || "UPDATE ".equals(upperCasedStatementBegin) || "DELETE ".equals(upperCasedStatementBegin)) {
             if (eventDeserializationFailureHandlingMode == EventProcessingFailureHandlingMode.FAIL) {
                 throw new ConnectException(
                         "Received DML '" + sql + "' for processing, binlog probably contains events generated with statement or mixed based replication format");
@@ -819,7 +819,7 @@ public class BinlogReader extends AbstractReader {
                 return;
             }
         }
-        if (sql.equalsIgnoreCase("ROLLBACK")) {
+        if ("ROLLBACK".equalsIgnoreCase(sql)) {
             // We have hit a ROLLBACK which is not supported
             logger.warn("Rollback statements cannot be handled without binlog buffering, the connector will fail. Please check '{}' to see how to enable buffering",
                     MySqlConnectorConfig.BUFFER_SIZE_FOR_BINLOG_READER.name());

@@ -535,7 +535,7 @@ public class MySqlValueConverters extends JdbcValueConverters {
             return false;
         }
 
-        return upperCaseTypeName.equals("GEOMETRYCOLLECTION") || upperCaseTypeName.equals("GEOMCOLLECTION")
+        return "GEOMETRYCOLLECTION".equals(upperCaseTypeName) || "GEOMCOLLECTION".equals(upperCaseTypeName)
                 || upperCaseTypeName.endsWith(".GEOMCOLLECTION");
     }
 

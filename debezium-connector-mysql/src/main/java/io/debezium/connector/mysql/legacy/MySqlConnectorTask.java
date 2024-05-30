@@ -544,7 +544,7 @@ public final class MySqlConnectorTask extends BaseSourceTask<MySqlPartition, MyS
         if (binlogFilename == null) {
             return true; // start at current position
         }
-        if (binlogFilename.equals("")) {
+        if ("".equals(binlogFilename)) {
             return true; // start at beginning
         }
 

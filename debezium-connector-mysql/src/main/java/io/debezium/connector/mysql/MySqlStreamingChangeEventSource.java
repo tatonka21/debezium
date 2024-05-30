@@ -525,7 +525,7 @@ public class MySqlStreamingChangeEventSource implements StreamingChangeEventSour
         QueryEventData command = unwrapData(event);
         LOGGER.debug("Received query command: {}", event);
         String sql = command.getSql().trim();
-        if (sql.equalsIgnoreCase("BEGIN")) {
+        if ("BEGIN".equalsIgnoreCase(sql)) {
             // We are starting a new transaction ...
             offsetContext.startNextTransaction();
             eventDispatcher.dispatchTransactionStartedEvent(partition, offsetContext.getTransactionId(), offsetContext);
@@ -538,7 +538,7 @@ public class MySqlStreamingChangeEventSource implements StreamingChangeEventSour
             }
             return;
         }
-        if (sql.equalsIgnoreCase("COMMIT")) {
+        if ("COMMIT".equalsIgnoreCase(sql)) {
             handleTransactionCompletion(partition, offsetContext, event);
             return;
         }
@@ -553,7 +553,7 @@ public class MySqlStreamingChangeEventSource implements StreamingChangeEventSour
             LOGGER.debug("DDL '{}' was filtered out of processing", sql);
             return;
         }
-        if (upperCasedStatementBegin.equals("INSERT ") || upperCasedStatementBegin.equals("UPDATE ") || upperCasedStatementBegin.equals("DELETE ")) {
+        if ("INSERT ".equals(upperCasedStatementBegin) || "UPDATE ".equals(upperCasedStatementBegin) || "DELETE ".equals(upperCasedStatementBegin)) {
             if (eventDeserializationFailureHandlingMode == EventProcessingFailureHandlingMode.FAIL) {
                 throw new DebeziumException(
                         "Received DML '" + sql + "' for processing, binlog probably contains events generated with statement or mixed based replication format");
@@ -567,7 +567,7 @@ public class MySqlStreamingChangeEventSource implements StreamingChangeEventSour
                 return;
             }
         }
-        if (sql.equalsIgnoreCase("ROLLBACK")) {
+        if ("ROLLBACK".equalsIgnoreCase(sql)) {
             // We have hit a ROLLBACK which is not supported
             LOGGER.warn("Rollback statements cannot be handled without binlog buffering, the connector will fail. Please check '{}' to see how to enable buffering",
                     MySqlConnectorConfig.BUFFER_SIZE_FOR_BINLOG_READER.name());

@@ -120,7 +120,7 @@ public final class ConfigProperties {
         if (value == null) {
             return defaultValue;
         }
-        return !value.isEmpty() && !value.equalsIgnoreCase("false") && !value.equalsIgnoreCase("0");
+        return !value.isEmpty() && !"false".equalsIgnoreCase(value) && !"0".equalsIgnoreCase(value);
     }
 
     private static Optional<String> stringOptionalProperty(String key) {

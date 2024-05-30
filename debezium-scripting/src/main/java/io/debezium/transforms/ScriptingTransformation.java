@@ -150,7 +150,7 @@ public abstract class ScriptingTransformation<R extends ConnectRecord<R>> implem
         }
 
         // graal.js needs a bit of extra-config...
-        if (language.equals(GRAAL_JS_ENGINE)) {
+        if (GRAAL_JS_ENGINE.equals(language)) {
             engine = new GraalJsEngine();
         }
         else {

@@ -357,7 +357,7 @@ public abstract class AbstractDdlParser implements DdlParser {
                 column.jdbcType(Types.CHAR);
                 column.length(constantValue.length() - 2);
             }
-            else if (constantValue.equalsIgnoreCase("TRUE") || constantValue.equalsIgnoreCase("FALSE")) {
+            else if ("TRUE".equalsIgnoreCase(constantValue) || "FALSE".equalsIgnoreCase(constantValue)) {
                 column.type("BOOLEAN");
                 column.jdbcType(Types.BOOLEAN);
             }

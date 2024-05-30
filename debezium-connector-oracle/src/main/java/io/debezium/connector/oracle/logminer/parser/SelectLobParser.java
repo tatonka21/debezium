@@ -176,7 +176,7 @@ public class SelectLobParser {
 
         if (start != -1 && last != -1) {
             final String value = sql.substring(start, last);
-            if (!value.equalsIgnoreCase("null")) {
+            if (!"null".equalsIgnoreCase(value)) {
                 columnValues[columnIndex] = value;
             }
         }
