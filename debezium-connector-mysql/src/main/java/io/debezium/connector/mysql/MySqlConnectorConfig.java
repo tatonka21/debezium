@@ -6,6 +6,7 @@
 package io.debezium.connector.mysql;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.Random;
 import java.util.Set;
@@ -1191,7 +1192,7 @@ public class MySqlConnectorConfig extends HistorizedRelationalDatabaseConnectorC
     private static int randomServerId() {
         int lowestServerId = 5400;
         int highestServerId = 6400;
-        return lowestServerId + new Random().nextInt(highestServerId - lowestServerId);
+        return lowestServerId + new SecureRandom().nextInt(highestServerId - lowestServerId);
     }
 
     @Override
