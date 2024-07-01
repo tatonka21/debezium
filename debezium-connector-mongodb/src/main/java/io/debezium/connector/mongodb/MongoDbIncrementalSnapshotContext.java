@@ -5,6 +5,7 @@
  */
 package io.debezium.connector.mongodb;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -129,6 +130,7 @@ public class MongoDbIncrementalSnapshotContext<T> implements IncrementalSnapshot
     private Object[] serializedStringToArray(String field, String serialized) {
         try (final ByteArrayInputStream bis = new ByteArrayInputStream(HexConverter.convertFromHex(serialized));
                 ObjectInputStream ois = new ObjectInputStream(bis)) {
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             return (Object[]) ois.readObject();
         }
         catch (Exception e) {
