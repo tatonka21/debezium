@@ -5,6 +5,8 @@
  */
 package io.debezium.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -305,7 +307,7 @@ public class IoUtil {
         if (result == null) {
             // Still not found, so try to construct a URL out of it ...
             try {
-                URL url = new URL(resourcePath);
+                URL url = Urls.create(resourcePath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 result = url.openStream();
                 logMessage(result, logger, resourceDesc, "at URL " + url.toExternalForm());
             }
