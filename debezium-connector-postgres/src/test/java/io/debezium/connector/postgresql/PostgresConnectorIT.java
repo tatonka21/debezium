@@ -9,6 +9,7 @@ package io.debezium.connector.postgresql;
 import static io.debezium.connector.postgresql.TestHelper.PK_FIELD;
 import static io.debezium.connector.postgresql.TestHelper.topicName;
 import static io.debezium.junit.EqualityCheck.LESS_THAN;
+import java.security.SecureRandom;
 import static junit.framework.TestCase.assertEquals;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -414,7 +415,7 @@ public class PostgresConnectorIT extends AbstractConnectorTest {
     @FixFor("DBZ-997")
     public void shouldReceiveChangesForChangePKColumnDefinition() throws Exception {
         Testing.Print.enable();
-        final String slotName = "pkcolumndef" + new Random().nextInt(100);
+        final String slotName = "pkcolumndef" + new SecureRandom().nextInt(100);
         TestHelper.create().dropReplicationSlot(slotName);
         try {
             final PostgresConnectorConfig config = new PostgresConnectorConfig(TestHelper.defaultConfig()
@@ -512,7 +513,7 @@ public class PostgresConnectorIT extends AbstractConnectorTest {
     @Test
     public void shouldReceiveChangesForChangeColumnDefault() throws Exception {
         Testing.Print.enable();
-        final String slotName = "default_change" + new Random().nextInt(100);
+        final String slotName = "default_change" + new SecureRandom().nextInt(100);
         TestHelper.create().dropReplicationSlot(slotName);
         try {
             final PostgresConnectorConfig config = new PostgresConnectorConfig(TestHelper.defaultConfig()
@@ -668,7 +669,7 @@ public class PostgresConnectorIT extends AbstractConnectorTest {
     @Test
     public void showThatSchemaColumnDefaultMayApplyRetroactively() throws Exception {
         Testing.Print.enable();
-        final String slotName = "default_change" + new Random().nextInt(100);
+        final String slotName = "default_change" + new SecureRandom().nextInt(100);
         try (PostgresConnection conn = TestHelper.create()) {
             conn.dropReplicationSlot(slotName);
         }
