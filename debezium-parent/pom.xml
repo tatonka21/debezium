@@ -76,8 +76,8 @@
 
         <!-- Skip the API checks by default. Let the modules opt in. -->
         <revapi.skip>true</revapi.skip>
-
-    </properties>
+    <versions.java-security-toolkit>1.2.1</versions.java-security-toolkit>
+  </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -88,7 +88,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-        </dependencies>
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit</artifactId>
+        <version>${versions.java-security-toolkit}</version>
+      </dependency>
+    </dependencies>
     </dependencyManagement>
 
     <build>
