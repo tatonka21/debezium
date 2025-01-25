@@ -5,6 +5,7 @@
  */
 package io.debezium.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,7 +39,7 @@ public class ContainerImageVersions {
                 String content;
                 StringBuilder response = new StringBuilder();
 
-                while ((content = bufferedReader.readLine()) != null) {
+                while ((content = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
                     response.append(content);
                 }
 
