@@ -6,6 +6,7 @@
 package io.debezium.outbox.quarkus.internal;
 
 import static io.debezium.outbox.quarkus.internal.OutboxConstants.OUTBOX_ENTITY_HBMXML;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -69,7 +70,7 @@ public class AdditionalJaxbMappingProducerImpl implements AdditionalJaxbMappingP
                 final Writer writer = new BufferedWriter(new OutputStreamWriter(baos, StandardCharsets.UTF_8));
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
                     String line;
-                    while ((line = reader.readLine()) != null) {
+                    while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                         writer.write(line);
                     }
                     writer.flush();
