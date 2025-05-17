@@ -5,6 +5,8 @@
  */
 package io.debezium.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,7 +29,7 @@ public class ContainerImageVersions {
 
     public static String getStableVersion(String image) {
         try {
-            URL url = new URL(String.format(BASE_URL, image));
+            URL url = Urls.create(String.format(BASE_URL, image), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestMethod("GET");
 
