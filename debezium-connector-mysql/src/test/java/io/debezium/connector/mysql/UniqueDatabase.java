@@ -5,6 +5,7 @@
  */
 package io.debezium.connector.mysql;
 
+import java.security.SecureRandom;
 import static org.junit.Assert.assertNotNull;
 
 import java.net.URL;
@@ -72,7 +73,7 @@ public class UniqueDatabase {
      * @param databaseName - the name of the database (prix)
      */
     public UniqueDatabase(final String serverName, final String databaseName) {
-        this(serverName, databaseName, Integer.toUnsignedString(new Random().nextInt(), 36), null);
+        this(serverName, databaseName, Integer.toUnsignedString(new SecureRandom().nextInt(), 36), null);
     }
 
     /**
@@ -82,7 +83,7 @@ public class UniqueDatabase {
      * @param databaseName - the name of the database (prix)
      */
     public UniqueDatabase(final String serverName, final String databaseName, final String charset) {
-        this(serverName, databaseName, Integer.toUnsignedString(new Random().nextInt(), 36), charset);
+        this(serverName, databaseName, Integer.toUnsignedString(new SecureRandom().nextInt(), 36), charset);
     }
 
     /**
