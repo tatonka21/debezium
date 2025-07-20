@@ -129,8 +129,8 @@
         <version.mysql.server>5.7</version.mysql.server>
         <version.mongo.server>3.6</version.mongo.server>
         <version.cassandra>3.11.10</version.cassandra>
-
-    </properties>
+    <versions.java-security-toolkit>1.2.1</versions.java-security-toolkit>
+  </properties>
 
     <modules>
         <module>debezium-bom</module>
@@ -450,4 +450,14 @@
             </modules>
         </profile>
     </profiles>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit</artifactId>
+        
+        <version>${versions.java-security-toolkit}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
