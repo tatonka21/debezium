@@ -5,6 +5,7 @@
  */
 package io.debezium.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -117,7 +118,7 @@ public class IoUtil {
     public static void readLines(InputStream stream, Consumer<String> lineProcessor) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             String line = null;
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 lineProcessor.accept(line);
             }
         }
@@ -134,7 +135,7 @@ public class IoUtil {
     public static void readLines(InputStream stream, Consumer<String> lineProcessor, Charset charset) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, charset))) {
             String line = null;
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 lineProcessor.accept(line);
             }
         }
